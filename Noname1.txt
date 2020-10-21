@@ -1,0 +1,9 @@
+{{"颜色":[{"checked":true,"url":"1316276669094432768.html","option":"红"},{"checked":false,"option":"绿"}],
+"机身内存":[{"checked":true,"url":"1316276669094432768.html","option":"64G"},{"checked":false,"option":"8G"}]}}
+
+{"颜色":[{"checked":false,"url":"1316276669094432768.html","option":"红"},
+{"checked":true,"url":"1316276669400616962.html","option":"绿"}],
+"机身内存":[{"checked":true,"url":"1316276669400616962.html","option":"64G"},
+{"checked":false,"url":"1316276669400616960.html","option":"8G"}]}
+
+{}
