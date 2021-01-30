@@ -1,4 +1,4 @@
-# MybatisPlus快速入门
+# MybatisPlus
 
 ## 简介
 
@@ -809,4 +809,80 @@ public class CodeGenerator {
 
 }
 ```
+
+
+
+# 源码阅读
+
+## mybatis 字段策略
+
+参考：[MyBatis-Plus 配置 field-strategy 属性详解](https://www.lichenliang.top/2019/03/mybatis-plus-global-config-field-strategy.html)
+
+思考：mybatis如何插入一个null,或者如何实现如果插入的时候忽略掉null值。
+
+MyBatis-Plus 在 SpringBoot 的中有个配置项 field-strategy 。官方说明如下：
+
+> 该策略约定了如何产出注入的sql,涉及`insert`,`update`以及`wrapper`内部的`entity`属性生成的 where 条件
+
+在下面这个包中自动设置了field-strategy
+
+```java
+package com.baomidou.mybatisplus.enums;
+```
+
+```java
+package com.baomidou.mybatisplus.enums;
+
+/**
+ * <p>
+ * 字段策略枚举类
+ * </p>
+ *
+ * @author hubin
+ * @Date 2016-09-09
+ */
+public enum FieldStrategy {
+    IGNORED(0, "忽略判断"),
+    NOT_NULL(1, "非 NULL 判断"),
+    NOT_EMPTY(2, "非空判断");
+    /**
+     * 主键
+     */
+    private final int key;
+    /**
+     * 描述
+     */
+    private final String desc;
+    FieldStrategy(final int key, final String desc) {
+        this.key = key;
+        this.desc = desc;
+    }
+    //重点根据不同的key进行选择策略：忽略判断、非 NULL 判断、非空判断
+    //默认是非 NULL 判断
+    //可以在类上面加strategy，例子如下面
+    //@TableField(value = "user_name", strategy = FieldStrategy.IGNORED)
+	//private String userName;
+    public static FieldStrategy getFieldStrategy(int key) {
+        FieldStrategy[] fss = FieldStrategy.values();
+        for (FieldStrategy fs : fss) {
+            if (fs.getKey() == key) {
+                return fs;
+            }
+        }
+        return FieldStrategy.NOT_NULL;
+    }
+    public int getKey() {
+        return this.key;
+    }
+    public String getDesc() {
+        return this.desc;
+    }
+}
+```
+
+关注这个可以发现很多东西
+
+![image-20210129201001353](C:\Users\DMQi\AppData\Roaming\Typora\typora-user-images\image-20210129201001353.png)
+
+
 
